@@ -1,6 +1,7 @@
 package com.rubenskj.portfolio.services;
 
 import com.rubenskj.portfolio.dto.PersonDTO;
+import com.rubenskj.portfolio.exception.NotFoundException;
 import com.rubenskj.portfolio.model.Person;
 import com.rubenskj.portfolio.repository.IPersonRepository;
 import org.slf4j.Logger;
@@ -34,6 +35,29 @@ public class PersonService {
                 personDTO.getProjectsIds(),
                 personDTO.getCertificationsIds()
         );
+    }
+
+    public Person getPersonById(String id) {
+        return this.personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person not found with this id."));
+    }
+
+    public Person updatePersonById(String id, PersonDTO personDTO) {
+        LOGGER.info("Updating person.");
+        LOGGER.debug("Person id: {}", id);
+        LOGGER.debug("PersonDTO: {}", personDTO);
+
+        Person person = this.getPersonById(id);
+
+        this.setPersonByDTO(person, personDTO);
+
+        return this.personRepository.save(person);
+    }
+
+    private void setPersonByDTO(Person person, PersonDTO personDTO) {
+        LOGGER.info("Updating fields");
+
+        person.setDisplayedName(personDTO.getDisplayedName());
+        person.setDescription(personDTO.getDescription());
     }
 
 }

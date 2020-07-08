@@ -1,5 +1,7 @@
 package com.rubenskj.portfolio.dto;
 
+import com.rubenskj.portfolio.model.Person;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -34,6 +36,16 @@ public class PersonDTO {
         this.description = description;
         this.projectsIds = projectsIds;
         this.certificationsIds = certificationsIds;
+    }
+
+    public static PersonDTO of(Person person) {
+        return new PersonDTO(
+                person.getId(),
+                person.getDisplayedName(),
+                person.getDescription(),
+                person.getProjectsIds(),
+                person.getCertificationsIds()
+        );
     }
 
     public String getId() {

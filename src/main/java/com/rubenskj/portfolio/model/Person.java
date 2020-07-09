@@ -11,6 +11,8 @@ public class Person {
     @Id
     private String id;
 
+    private String avatar;
+
     private String displayedName;
 
     private String description;
@@ -22,7 +24,8 @@ public class Person {
     public Person() {
     }
 
-    public Person(String displayedName, String description, List<String> projectsIds, List<String> certificationsIds) {
+    public Person(String avatar, String displayedName, String description, List<String> projectsIds, List<String> certificationsIds) {
+        this.avatar = avatar;
         this.displayedName = displayedName;
         this.description = description;
         this.projectsIds = projectsIds;
@@ -31,6 +34,14 @@ public class Person {
 
     public String getId() {
         return id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getDisplayedName() {

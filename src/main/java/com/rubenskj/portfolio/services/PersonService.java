@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.ArrayList;
 
 @Service
 public class PersonService {
@@ -49,8 +50,8 @@ public class PersonService {
                 personDTO.getAvatar(),
                 personDTO.getDisplayedName(),
                 personDTO.getDescription(),
-                personDTO.getProjectsIds(),
-                personDTO.getCertificationsIds()
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 

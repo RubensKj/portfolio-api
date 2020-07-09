@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
@@ -18,8 +19,8 @@ public class PersonController {
     }
 
     @PostMapping
-    public PersonDTO createPerson(@RequestParam("avatarFile") MultipartFile avatar, @Valid @RequestBody PersonDTO personDTO) {
-        return PersonDTO.of(this.personService.save(personDTO, avatar));
+    public PersonDTO createPerson(@RequestParam("avatarFile") MultipartFile file, @Valid PersonDTO personDTO) {
+        return PersonDTO.of(this.personService.save(personDTO, file));
     }
 
     @GetMapping("/{id}")
@@ -28,7 +29,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePersonById(@PathVariable("id") String id, @Valid @RequestBody PersonDTO personDTO) {
+    public PersonDTO updatePersonById(@PathVariable("id") String id, @Valid PersonDTO personDTO) {
         return PersonDTO.of(this.personService.updatePersonById(id, personDTO));
     }
 

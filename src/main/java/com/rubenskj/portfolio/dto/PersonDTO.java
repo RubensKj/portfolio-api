@@ -4,7 +4,6 @@ import com.rubenskj.portfolio.model.Person;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class PersonDTO {
 
@@ -19,19 +18,15 @@ public class PersonDTO {
     @NotNull(message = "Description cannot be null")
     @NotBlank(message = "Description cannot be empty")
     private String description;
-    private List<String> projectsIds;
-    private List<String> certificationsIds;
 
     public PersonDTO() {
     }
 
-    public PersonDTO(String id, String avatar, @NotNull(message = "Displayed Name cannot be null") @NotBlank(message = "Displayed Name cannot be empty") String displayedName, @NotNull(message = "Description cannot be null") @NotBlank(message = "Description cannot be empty") String description, List<String> projectsIds, List<String> certificationsIds) {
+    public PersonDTO(String id, String avatar, String displayedName, String description) {
         this.id = id;
         this.avatar = avatar;
         this.displayedName = displayedName;
         this.description = description;
-        this.projectsIds = projectsIds;
-        this.certificationsIds = certificationsIds;
     }
 
     public static PersonDTO of(Person person) {
@@ -39,9 +34,7 @@ public class PersonDTO {
                 person.getId(),
                 person.getAvatar(),
                 person.getDisplayedName(),
-                person.getDescription(),
-                person.getProjectsIds(),
-                person.getCertificationsIds()
+                person.getDescription()
         );
     }
 
@@ -61,15 +54,15 @@ public class PersonDTO {
         return displayedName;
     }
 
+    public void setDisplayedName(String displayedName) {
+        this.displayedName = displayedName;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public List<String> getProjectsIds() {
-        return projectsIds;
-    }
-
-    public List<String> getCertificationsIds() {
-        return certificationsIds;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

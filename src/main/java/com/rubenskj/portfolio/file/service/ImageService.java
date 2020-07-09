@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -75,5 +76,9 @@ public class ImageService {
         } catch (IOException ex) {
             throw new IllegalArgumentException("Could not store file " + fileName + ". Please try again!", ex);
         }
+    }
+
+    public String getDefaultUrl(URI uri, Resource resource) {
+        return uri.getScheme().concat("://").concat(uri.getAuthority().concat("/api/images/").concat(resource.getFilename()));
     }
 }

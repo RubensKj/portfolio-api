@@ -29,8 +29,8 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePersonById(@PathVariable("id") String id, @Valid PersonDTO personDTO) {
-        return PersonDTO.of(this.personService.updatePersonById(id, personDTO));
+    public PersonDTO updatePersonById(@PathVariable("id") String id, @RequestParam(name = "avatarFile", required = false) MultipartFile avatar, @Valid PersonDTO personDTO) {
+        return PersonDTO.of(this.personService.updatePersonById(id, personDTO, avatar));
     }
 
     @PatchMapping("/{id}")

@@ -59,12 +59,19 @@ public class PersonService {
         return this.personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person not found with this id."));
     }
 
-    public Person updatePersonById(String id, PersonDTO personDTO) {
+    public Person updatePersonById(String id, PersonDTO personDTO, MultipartFile avatar) {
         LOGGER.info("Updating person.");
         LOGGER.debug("Person id: {}", id);
         LOGGER.debug("PersonDTO: {}", personDTO);
 
         Person person = this.findPersonById(id);
+
+        if (avatar != null) {
+            String avatarFileName = this.imageService.saveImage(avatar);
+            String urlAvatar = this.parseUrlAvatarByFileName(avatarFileName);
+
+            person.setAvatar(urlAvatar);
+        }
 
         this.setPersonByDTO(person, personDTO);
 
@@ -99,6 +106,6 @@ public class PersonService {
 
         URI contextUrl = URI.create(request.getRequestURL().toString()).resolve(request.getContextPath());
 
-        return contextUrl + "images/" + resource.getFilename();
+        return this.imageService.getDefaultUrl(contextUrl, resource);
     }
 }

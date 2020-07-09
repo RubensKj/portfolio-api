@@ -6,6 +6,10 @@ import com.rubenskj.portfolio.repository.IProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -18,11 +22,27 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public Project save(ProjectDTO projectDTO) {
+    public Project save(ProjectDTO projectDTO, List<MultipartFile> images) {
         LOGGER.info("Saving Project");
         LOGGER.debug("ProjectDTO: {}", projectDTO);
 
-        return null;
+        Project project = this.createProjectByDTO(projectDTO);
+
+        return this.projectRepository.save(project);
+    }
+
+    private Project createProjectByDTO(ProjectDTO projectDTO) {
+        return new Project(
+                projectDTO.getName(),
+                projectDTO.getFullName(),
+                projectDTO.getLanguage(),
+                projectDTO.getDescription(),
+                projectDTO.getLicense(),
+                projectDTO.getProjectUrl(),
+                projectDTO.getGithubUrl(),
+                projectDTO.getImages(),
+                LocalDateTime.now()
+        );
     }
 
 }

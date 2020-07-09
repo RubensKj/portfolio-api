@@ -26,13 +26,13 @@ public class Project {
     private LocalDateTime updatedAt;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
     public Project() {
     }
 
-    public Project(String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, List<String> images, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Project(String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, List<String> images, LocalDateTime updatedAt) {
         this.name = name;
         this.fullName = fullName;
         this.language = language;
@@ -42,7 +42,6 @@ public class Project {
         this.githubUrl = githubUrl;
         this.images = images;
         this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
     }
 
     public String getId() {

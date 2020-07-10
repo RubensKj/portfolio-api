@@ -1,6 +1,7 @@
 package com.rubenskj.portfolio.dto;
 
 import com.rubenskj.portfolio.model.License;
+import com.rubenskj.portfolio.model.Project;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +35,22 @@ public class ProjectDTO {
         this.githubUrl = githubUrl;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+    }
+
+    public static ProjectDTO of(Project project) {
+        return new ProjectDTO(
+                project.getId(),
+                project.getImages(),
+                project.getName(),
+                project.getFullName(),
+                project.getLanguage(),
+                project.getDescription(),
+                project.getLicense(),
+                project.getProjectUrl(),
+                project.getGithubUrl(),
+                project.getUpdatedAt(),
+                project.getCreatedAt()
+        );
     }
 
     public String getId() {

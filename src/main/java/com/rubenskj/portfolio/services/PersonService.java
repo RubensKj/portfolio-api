@@ -102,10 +102,6 @@ public class PersonService {
     }
 
     private String parseUrlAvatarByFileName(String avatarFileName) {
-        Resource resource = this.imageService.loadFileAsResource(avatarFileName);
-
-        URI contextUrl = URI.create(request.getRequestURL().toString()).resolve(request.getContextPath());
-
-        return this.imageService.getDefaultUrl(contextUrl, resource);
+        return this.imageService.getDefaultUrl(avatarFileName);
     }
 }

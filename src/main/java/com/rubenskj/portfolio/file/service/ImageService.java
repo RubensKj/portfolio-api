@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -23,10 +24,12 @@ import java.util.Objects;
 public class ImageService {
 
     private final Path path;
+    private final HttpServletRequest request;
 
-    public ImageService(ImageProperty imageProperty) {
+    public ImageService(ImageProperty imageProperty, HttpServletRequest request) {
         this.path = Paths.get(imageProperty.getPath())
                 .toAbsolutePath().normalize();
+        this.request = request;
 
         try {
             Files.createDirectories(this.path);
@@ -78,7 +81,11 @@ public class ImageService {
         }
     }
 
-    public String getDefaultUrl(URI uri, Resource resource) {
+    public String getDefaultUrl(String avatarFileName) {
+        Resource resource = this.loadFileAsResource(avatarFileName);
+
+        URI uri = URI.create(request.getRequestURL().toString()).resolve(request.getContextPath());
+
         return uri.getScheme().concat("://").concat(uri.getAuthority().concat("/api/images/").concat(resource.getFilename()));
     }
 }

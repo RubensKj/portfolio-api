@@ -13,6 +13,7 @@ public class Project {
 
     @Id
     private String id;
+    private String personId;
     private List<String> images;
     private String name;
     private String fullName;
@@ -32,7 +33,8 @@ public class Project {
     public Project() {
     }
 
-    public Project(String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, List<String> images, LocalDateTime updatedAt) {
+    public Project(String personId, String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, List<String> images, LocalDateTime updatedAt) {
+        this.personId = personId;
         this.name = name;
         this.fullName = fullName;
         this.language = language;
@@ -46,6 +48,14 @@ public class Project {
 
     public String getId() {
         return id;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public List<String> getImages() {

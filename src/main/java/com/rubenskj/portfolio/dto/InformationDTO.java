@@ -1,19 +1,17 @@
 package com.rubenskj.portfolio.dto;
 
-import com.rubenskj.portfolio.model.Certification;
-
 import java.util.List;
 
-public class MainDTO {
+public class InformationDTO {
 
     private PersonDTO personDTO;
     private List<ProjectDTO> projectsDTO;
-    private List<Certification> certifications;
+    private List<CertificationDTO> certifications;
 
-    public MainDTO() {
+    public InformationDTO() {
     }
 
-    public MainDTO(PersonDTO personDTO, List<ProjectDTO> projectsDTO, List<Certification> certifications) {
+    public InformationDTO(PersonDTO personDTO, List<ProjectDTO> projectsDTO, List<CertificationDTO> certifications) {
         this.personDTO = personDTO;
         this.projectsDTO = projectsDTO;
         this.certifications = certifications;
@@ -35,11 +33,11 @@ public class MainDTO {
         this.projectsDTO = projectsDTO;
     }
 
-    public List<Certification> getCertifications() {
+    public List<CertificationDTO> getCertifications() {
         return certifications;
     }
 
-    public void setCertifications(List<Certification> certifications) {
+    public void setCertifications(List<CertificationDTO> certifications) {
         this.certifications = certifications;
     }
 }

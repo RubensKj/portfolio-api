@@ -1,42 +1,53 @@
-package com.rubenskj.portfolio.model;
+package com.rubenskj.portfolio.dto;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.rubenskj.portfolio.model.Certification;
 
 import java.time.LocalDateTime;
 
-@Document
-public class Certification {
+public class CertificationDTO {
 
-    @Id
     private String id;
     private String personId;
     private String image;
     private String title;
     private String description;
     private String certificationUrl;
-
-    @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @CreationTimestamp
     private LocalDateTime creationAt = LocalDateTime.now();
 
-    private boolean isPinned;
+    public CertificationDTO() {
+    }
 
-    public Certification(String personId, String image, String title, String description, String certificationUrl) {
+    public CertificationDTO(String id, String personId, String image, String title, String description, String certificationUrl, LocalDateTime updatedAt, LocalDateTime creationAt) {
+        this.id = id;
         this.personId = personId;
         this.image = image;
         this.title = title;
         this.description = description;
         this.certificationUrl = certificationUrl;
-        this.updatedAt = LocalDateTime.now();
-        this.isPinned = false;
+        this.updatedAt = updatedAt;
+        this.creationAt = creationAt;
+    }
+
+    public static CertificationDTO of(Certification certification) {
+        return new CertificationDTO(
+                certification.getId(),
+                certification.getPersonId(),
+                certification.getImage(),
+                certification.getTitle(),
+                certification.getDescription(),
+                certification.getCertificationUrl(),
+                certification.getUpdatedAt(),
+                certification.getCreationAt()
+        );
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPersonId() {
@@ -91,11 +102,7 @@ public class Certification {
         return creationAt;
     }
 
-    public boolean isPinned() {
-        return isPinned;
-    }
-
-    public void setPinned(boolean pinned) {
-        isPinned = pinned;
+    public void setCreationAt(LocalDateTime creationAt) {
+        this.creationAt = creationAt;
     }
 }

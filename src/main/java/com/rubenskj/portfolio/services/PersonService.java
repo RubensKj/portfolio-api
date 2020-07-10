@@ -7,13 +7,10 @@ import com.rubenskj.portfolio.model.Person;
 import com.rubenskj.portfolio.repository.IPersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.ArrayList;
 
 @Service
 public class PersonService {
@@ -49,9 +46,7 @@ public class PersonService {
         return new Person(
                 personDTO.getAvatar(),
                 personDTO.getDisplayedName(),
-                personDTO.getDescription(),
-                new ArrayList<>(),
-                new ArrayList<>()
+                personDTO.getDescription()
         );
     }
 

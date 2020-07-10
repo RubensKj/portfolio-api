@@ -29,6 +29,7 @@ public class Project {
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private boolean isPinned;
 
     public Project() {
     }
@@ -44,6 +45,7 @@ public class Project {
         this.githubUrl = githubUrl;
         this.images = images;
         this.updatedAt = updatedAt;
+        this.isPinned = false;
     }
 
     public String getId() {
@@ -136,5 +138,13 @@ public class Project {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
     }
 }

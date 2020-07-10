@@ -3,8 +3,6 @@ package com.rubenskj.portfolio.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document
 public class Person {
 
@@ -17,19 +15,13 @@ public class Person {
 
     private String description;
 
-    private List<String> projectsIds;
-
-    private List<String> certificationsIds;
-
     public Person() {
     }
 
-    public Person(String avatar, String displayedName, String description, List<String> projectsIds, List<String> certificationsIds) {
+    public Person(String avatar, String displayedName, String description) {
         this.avatar = avatar;
         this.displayedName = displayedName;
         this.description = description;
-        this.projectsIds = projectsIds;
-        this.certificationsIds = certificationsIds;
     }
 
     public String getId() {
@@ -58,21 +50,5 @@ public class Person {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<String> getProjectsIds() {
-        return projectsIds;
-    }
-
-    public void setProjectsIds(List<String> projectsIds) {
-        this.projectsIds = projectsIds;
-    }
-
-    public List<String> getCertificationsIds() {
-        return certificationsIds;
-    }
-
-    public void setCertificationsIds(List<String> certificationsIds) {
-        this.certificationsIds = certificationsIds;
     }
 }

@@ -22,7 +22,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{personId}")
-    public ProjectDTO create(@PathVariable("personId") String personId, @RequestParam("images") List<MultipartFile> images, @Valid ProjectDTO projectDTO) {
+    public ProjectDTO create(@PathVariable("personId") String personId, @RequestParam(name = "images", required = false) List<MultipartFile> images, @Valid ProjectDTO projectDTO) {
         return ProjectDTO.of(this.projectService.save(personId, projectDTO, images));
     }
 
@@ -34,5 +34,10 @@ public class ProjectController {
     @GetMapping("/{personId}")
     public List<ProjectDTO> getAllProjectsFromPerson(@PathVariable("personId") String personId) {
         return ParserUtil.parseProjectToDTO(this.projectService.getAllProjectFromPerson(personId));
+    }
+
+    @PutMapping("/{projectId}")
+    public ProjectDTO updateProject(@PathVariable("projectId") String projectId, @Valid @RequestBody ProjectDTO projectDTO) {
+        return ProjectDTO.of(this.projectService.updateByProjectId(projectId, projectDTO));
     }
 }

@@ -2,6 +2,7 @@ package com.rubenskj.portfolio.services;
 
 import com.rubenskj.portfolio.dto.ProjectByUrlDTO;
 import com.rubenskj.portfolio.dto.ProjectDTO;
+import com.rubenskj.portfolio.exception.NotFoundException;
 import com.rubenskj.portfolio.exception.ProjectAlreadyExistsException;
 import com.rubenskj.portfolio.file.service.ImageService;
 import com.rubenskj.portfolio.model.Project;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,11 +44,8 @@ public class ProjectService {
         LOGGER.debug("ProjectDTO: {}", projectDTO);
 
         Project project = this.createProjectByDTO(personId, projectDTO);
-        List<String> fileNames = this.imageService.saveImages(images);
 
-        fileNames = fileNames.stream().map(this.imageService::getDefaultUrl).collect(Collectors.toList());
-
-        project.setImages(fileNames);
+        this.handleImages(images, project);
 
         return this.projectRepository.save(project);
     }
@@ -119,5 +118,63 @@ public class ProjectService {
 
     private GitProvider getProviderByName(String nameProvider) {
         return GitUrls.getByNameOfProvider(nameProvider);
+    }
+
+    public Project updateByProjectId(String projectId, ProjectDTO projectDTO) {
+        Project project = this.findById(projectId);
+
+        this.updateProjectFromDTO(project, projectDTO);
+
+        return this.projectRepository.save(project);
+    }
+
+    private void updateProjectFromDTO(Project project, ProjectDTO projectDTO) {
+        if (isNotEmpty(projectDTO.getName())) {
+            project.setName(projectDTO.getName());
+        }
+
+        if (isNotEmpty(projectDTO.getFullName())) {
+            project.setFullName(projectDTO.getFullName());
+        }
+
+        if (isNotEmpty(projectDTO.getLanguage())) {
+            project.setLanguage(projectDTO.getLanguage());
+        }
+
+        if (isNotEmpty(projectDTO.getDescription())) {
+            project.setDescription(projectDTO.getDescription());
+        }
+
+        if (projectDTO.getLicense() != null && (isNotEmpty(projectDTO.getLicense().getKey()) && isNotEmpty(projectDTO.getLicense().getName()) && isNotEmpty(projectDTO.getLicense().getUrl()))) {
+            project.setLicense(projectDTO.getLicense());
+        }
+
+        if (isNotEmpty(projectDTO.getProjectUrl())) {
+            project.setProjectUrl(projectDTO.getProjectUrl());
+        }
+
+        if (isNotEmpty(projectDTO.getGithubUrl())) {
+            project.setGithubUrl(projectDTO.getGithubUrl());
+        }
+
+        project.setUpdatedAt(LocalDateTime.now());
+    }
+
+    private boolean isNotEmpty(String name) {
+        return !StringUtils.isEmpty(name);
+    }
+
+    private void handleImages(List<MultipartFile> images, Project project) {
+        if (images != null && !images.isEmpty()) {
+            List<String> fileNames = this.imageService.saveImages(images);
+
+            fileNames = fileNames.stream().map(this.imageService::getDefaultUrl).collect(Collectors.toList());
+
+            project.getImages().addAll(fileNames);
+        }
+    }
+
+    private Project findById(String projectId) {
+        return this.projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found with this id. Id: " + projectId));
     }
 }

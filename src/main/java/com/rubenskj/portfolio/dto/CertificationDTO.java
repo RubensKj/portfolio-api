@@ -2,15 +2,25 @@ package com.rubenskj.portfolio.dto;
 
 import com.rubenskj.portfolio.model.Certification;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CertificationDTO {
 
     private String id;
+
+    @NotNull(message = "Person Id cannot be null")
     private String personId;
     private String image;
+
+    @NotEmpty(message = "Title cannot be empty")
+    @NotNull(message = "Title cannot be null")
     private String title;
     private String description;
+
+    @NotEmpty(message = "Certification Url cannot be empty")
+    @NotNull(message = "Certification Url cannot be null")
     private String certificationUrl;
     private LocalDateTime updatedAt;
     private LocalDateTime creationAt = LocalDateTime.now();

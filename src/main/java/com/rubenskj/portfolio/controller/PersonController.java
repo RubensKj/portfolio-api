@@ -29,12 +29,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePersonById(@PathVariable("id") String id, @RequestParam(name = "avatarFile", required = false) MultipartFile avatar, @Valid PersonDTO personDTO) {
+    public PersonDTO updatePersonById(@PathVariable("id") String id, @RequestParam(name = "avatar", required = false) MultipartFile avatar, @Valid PersonDTO personDTO) {
         return PersonDTO.of(this.personService.updatePersonById(id, personDTO, avatar));
-    }
-
-    @PatchMapping("/{id}")
-    public PersonDTO updateAvatarImage(@PathVariable("id") String id, @RequestParam("avatar") MultipartFile avatar) {
-        return PersonDTO.of(this.personService.updatePersonAvatarById(id, avatar));
     }
 }

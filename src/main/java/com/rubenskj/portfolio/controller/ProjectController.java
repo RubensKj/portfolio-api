@@ -40,4 +40,9 @@ public class ProjectController {
     public ProjectDTO updateProject(@PathVariable("projectId") String projectId, @Valid @RequestBody ProjectDTO projectDTO) {
         return ProjectDTO.of(this.projectService.updateByProjectId(projectId, projectDTO));
     }
+
+    @DeleteMapping("/{projectId}")
+    public void deleteById(@PathVariable("projectId") String projectId) {
+        this.projectService.deleteById(projectId);
+    }
 }

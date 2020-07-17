@@ -1,6 +1,7 @@
 package com.rubenskj.portfolio.services;
 
 import com.rubenskj.portfolio.dto.CertificationDTO;
+import com.rubenskj.portfolio.exception.NotFoundException;
 import com.rubenskj.portfolio.file.service.ImageService;
 import com.rubenskj.portfolio.model.Certification;
 import com.rubenskj.portfolio.repository.ICertificationRepository;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,24 +28,17 @@ public class CertificationService {
 
     public Certification createCertification(String personId, MultipartFile imageFile, CertificationDTO certificationDTO) {
         LOGGER.info("Creating Certification");
-        Certification certification = this.createCertificationFromDTO(certificationDTO);
+        Certification certification = this.createCertificationFromDTO(personId, certificationDTO);
 
-        if (imageFile != null) {
-            LOGGER.info("Saving Image Certification");
-            String saveImageFile = this.imageService.saveImage(imageFile);
-
-            String imageUrl = this.imageService.getDefaultUrl(saveImageFile);
-
-            certification.setImage(imageUrl);
-        }
+        this.handleImage(imageFile, certification);
 
         LOGGER.info("Saving Certification");
         return this.certificationRepository.save(certification);
     }
 
-    private Certification createCertificationFromDTO(CertificationDTO certificationDTO) {
+    private Certification createCertificationFromDTO(String personId, CertificationDTO certificationDTO) {
         return new Certification(
-                certificationDTO.getPersonId(),
+                personId,
                 certificationDTO.getImage(),
                 certificationDTO.getTitle(),
                 certificationDTO.getDescription(),
@@ -51,7 +46,48 @@ public class CertificationService {
         );
     }
 
+    public Certification findById(String certificationId) {
+        return this.certificationRepository.findById(certificationId).orElseThrow(() -> new NotFoundException("Certification not found with this id."));
+    }
+
     public List<Certification> getAllCertificationFromPerson(String personId) {
         return this.certificationRepository.findAllByPersonId(personId);
+    }
+
+    public Certification updateById(String certificationId, MultipartFile imageFile, CertificationDTO certificationDTO) {
+        Certification certification = this.findById(certificationId);
+
+        this.handleImage(imageFile, certification);
+
+        this.setCertificationFromDTO(certification, certificationDTO);
+
+        return this.certificationRepository.save(certification);
+    }
+
+    private void setCertificationFromDTO(Certification certification, CertificationDTO certificationDTO) {
+        certification.setTitle(certificationDTO.getTitle());
+        certification.setDescription(certificationDTO.getDescription());
+        certification.setCertificationUrl(certificationDTO.getCertificationUrl());
+        certification.setPinned(certificationDTO.isPinned());
+
+        certification.setUpdatedAt(LocalDateTime.now());
+    }
+
+    private void handleImage(MultipartFile imageFile, Certification certification) {
+        if (imageFile == null) {
+            return;
+        }
+
+        LOGGER.info("Saving Image Certification");
+        String saveImageFile = this.imageService.saveImage(imageFile);
+
+        String imageUrl = this.imageService.getDefaultUrl(saveImageFile);
+
+        certification.setImage(imageUrl);
+    }
+
+    public void deleteById(String certificationId) {
+        LOGGER.info("Deleting certification by id. Id: {}", certificationId);
+        this.certificationRepository.deleteById(certificationId);
     }
 }

@@ -14,7 +14,6 @@ public class ParserUtil {
     private ParserUtil() {
     }
 
-
     public static List<ProjectDTO> parseProjectToDTO(List<Project> allProjectFromPerson) {
         if (allProjectFromPerson == null || allProjectFromPerson.isEmpty()) {
             return new ArrayList<>();

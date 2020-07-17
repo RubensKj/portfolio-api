@@ -10,8 +10,6 @@ public class CertificationDTO {
 
     private String id;
 
-    @NotNull(message = "Person Id cannot be null")
-    private String personId;
     private String image;
 
     @NotEmpty(message = "Title cannot be empty")
@@ -22,19 +20,22 @@ public class CertificationDTO {
     @NotEmpty(message = "Certification Url cannot be empty")
     @NotNull(message = "Certification Url cannot be null")
     private String certificationUrl;
+
+    private boolean isPinned;
+
     private LocalDateTime updatedAt;
     private LocalDateTime creationAt = LocalDateTime.now();
 
     public CertificationDTO() {
     }
 
-    public CertificationDTO(String id, String personId, String image, String title, String description, String certificationUrl, LocalDateTime updatedAt, LocalDateTime creationAt) {
+    public CertificationDTO(String id, String image, String title, String description, String certificationUrl, boolean isPinned, LocalDateTime updatedAt, LocalDateTime creationAt) {
         this.id = id;
-        this.personId = personId;
         this.image = image;
         this.title = title;
         this.description = description;
         this.certificationUrl = certificationUrl;
+        this.isPinned = isPinned;
         this.updatedAt = updatedAt;
         this.creationAt = creationAt;
     }
@@ -42,11 +43,11 @@ public class CertificationDTO {
     public static CertificationDTO of(Certification certification) {
         return new CertificationDTO(
                 certification.getId(),
-                certification.getPersonId(),
                 certification.getImage(),
                 certification.getTitle(),
                 certification.getDescription(),
                 certification.getCertificationUrl(),
+                certification.isPinned(),
                 certification.getUpdatedAt(),
                 certification.getCreationAt()
         );
@@ -58,14 +59,6 @@ public class CertificationDTO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
     }
 
     public String getImage() {
@@ -98,6 +91,14 @@ public class CertificationDTO {
 
     public void setCertificationUrl(String certificationUrl) {
         this.certificationUrl = certificationUrl;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
     }
 
     public LocalDateTime getUpdatedAt() {

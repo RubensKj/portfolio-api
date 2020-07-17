@@ -80,22 +80,6 @@ public class PersonService {
         person.setDescription(personDTO.getDescription());
     }
 
-    public Person updatePersonAvatarById(String id, MultipartFile avatar) {
-        Person person = this.findPersonById(id);
-
-        LOGGER.info("Updating avatar by id. Id: {}", id);
-
-        String fileName = this.imageService.saveImage(avatar);
-
-        String urlAvatarByFileName = this.parseUrlAvatarByFileName(fileName);
-
-
-        LOGGER.info("Updating avatar from user.");
-        person.setAvatar(urlAvatarByFileName);
-
-        return this.personRepository.save(person);
-    }
-
     private String parseUrlAvatarByFileName(String avatarFileName) {
         return this.imageService.getDefaultUrl(avatarFileName);
     }

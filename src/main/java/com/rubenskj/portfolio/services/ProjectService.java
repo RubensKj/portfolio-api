@@ -71,7 +71,7 @@ public class ProjectService {
 
     public Project createProjectByProjectUrl(String personId, ProjectByUrlDTO projectByUrlDTO) {
         if (this.existsByNameOrFullName(projectByUrlDTO.getRepoName())) {
-            throw new ProjectAlreadyExistsException("");
+            throw new ProjectAlreadyExistsException("Project already exists with this name or full name.");
         }
 
         LOGGER.info("Getting provider");
@@ -176,5 +176,9 @@ public class ProjectService {
 
     private Project findById(String projectId) {
         return this.projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found with this id. Id: " + projectId));
+    }
+
+    public void deleteById(String projectId) {
+        this.projectRepository.deleteById(projectId);
     }
 }

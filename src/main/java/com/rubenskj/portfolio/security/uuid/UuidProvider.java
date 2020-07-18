@@ -37,7 +37,6 @@ public class UuidProvider {
     }
 
     public Session getSessionByUuid(String uuid) {
-        LOGGER.info("Finding Session from UUID. Uuid: {}", uuid);
         return this.sessionRepository.findByUuid(uuid).orElseThrow(() -> new NotFoundException("Session cannot be found with this uuid. UUID: " + uuid));
     }
 

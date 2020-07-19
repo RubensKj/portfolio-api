@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.rubenskj.portfolio.PathTypeEnum.PROJECT_PATH_URI;
+import static com.rubenskj.portfolio.enums.PathTypeEnum.PROJECT_PATH_URI;
 import static com.rubenskj.portfolio.util.HttpUtil.getUrlFormattedByProvider;
 
 @Service

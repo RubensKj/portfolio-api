@@ -1,6 +1,6 @@
 package com.rubenskj.portfolio.file.service;
 
-import com.rubenskj.portfolio.PathTypeEnum;
+import com.rubenskj.portfolio.enums.PathTypeEnum;
 import com.rubenskj.portfolio.exception.NotFoundException;
 import com.rubenskj.portfolio.file.property.ImageProperty;
 import org.slf4j.Logger;

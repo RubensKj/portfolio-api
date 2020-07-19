@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.rubenskj.portfolio.PathTypeEnum.CERTIFICATION_PATH_URI;
+import static com.rubenskj.portfolio.enums.PathTypeEnum.CERTIFICATION_PATH_URI;
 
 @Service
 public class CertificationService {

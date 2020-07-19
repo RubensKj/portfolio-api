@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.rubenskj.portfolio.PathTypeEnum.PERSON_PATH_URI;
+import static com.rubenskj.portfolio.enums.PathTypeEnum.PERSON_PATH_URI;
 
 @Service
 public class PersonService {

@@ -1,4 +1,4 @@
-package com.rubenskj.portfolio;
+package com.rubenskj.portfolio.enums;
 
 public enum PathTypeEnum {
     PERSON_PATH_URI("person"),

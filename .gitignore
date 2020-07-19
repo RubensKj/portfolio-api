@@ -33,3 +33,7 @@ build/
 ### Images ###
 images
 images/**
+
+### Logs ##
+logs
+logs/**

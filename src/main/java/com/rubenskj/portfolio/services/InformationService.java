@@ -36,4 +36,16 @@ public class InformationService {
                 parseCertificationToDTO(allCertificationFromPerson)
         );
     }
+
+    public InformationDTO getInformationDTOByPersonIdWithPinnedSorted(String personId) {
+        Person person = this.personService.findPersonById(personId);
+        List<Project> allProjectFromPerson = this.projectService.getAllProjectPinnedFromPerson(personId);
+        List<Certification> allCertificationFromPerson = this.certificationService.getAllCertificationPinnedFromPerson(personId);
+
+        return new InformationDTO(
+                PersonDTO.of(person),
+                parseProjectToDTO(allProjectFromPerson),
+                parseCertificationToDTO(allCertificationFromPerson)
+        );
+    }
 }

@@ -7,6 +7,9 @@ import com.rubenskj.portfolio.model.Certification;
 import com.rubenskj.portfolio.repository.ICertificationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +22,15 @@ import static com.rubenskj.portfolio.enums.PathTypeEnum.CERTIFICATION_PATH_URI;
 public class CertificationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificationService.class);
+    private static final String COLLECTION_NAME = "certification";
 
     private final ICertificationRepository certificationRepository;
+    private final MongoTemplate mongoTemplate;
     private final ImageService imageService;
 
-    public CertificationService(ICertificationRepository certificationRepository, ImageService imageService) {
+    public CertificationService(ICertificationRepository certificationRepository, MongoTemplate mongoTemplate, ImageService imageService) {
         this.certificationRepository = certificationRepository;
+        this.mongoTemplate = mongoTemplate;
         this.imageService = imageService;
     }
 
@@ -44,7 +50,8 @@ public class CertificationService {
                 certificationDTO.getImage(),
                 certificationDTO.getTitle(),
                 certificationDTO.getDescription(),
-                certificationDTO.getCertificationUrl()
+                certificationDTO.getCertificationUrl(),
+                certificationDTO.getPinned()
         );
     }
 
@@ -54,6 +61,18 @@ public class CertificationService {
 
     public List<Certification> getAllCertificationFromPerson(String personId) {
         return this.certificationRepository.findAllByPersonId(personId);
+    }
+
+    public List<Certification> getAllCertificationPinnedFromPerson(String personId) {
+        Criteria criteria = new Criteria();
+
+        criteria.and("personId").is(personId)
+                .and("isPinned").is(true);
+
+        Query query = new Query();
+        query.addCriteria(criteria);
+
+        return this.mongoTemplate.find(query, Certification.class, COLLECTION_NAME);
     }
 
     public Certification updateById(String certificationId, MultipartFile imageFile, CertificationDTO certificationDTO) {
@@ -70,7 +89,7 @@ public class CertificationService {
         certification.setTitle(certificationDTO.getTitle());
         certification.setDescription(certificationDTO.getDescription());
         certification.setCertificationUrl(certificationDTO.getCertificationUrl());
-        certification.setPinned(certificationDTO.isPinned());
+        certification.setPinned(certificationDTO.getPinned() != null && certificationDTO.getPinned());
 
         certification.setUpdatedAt(LocalDateTime.now());
     }

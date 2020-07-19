@@ -38,10 +38,12 @@ public class ProjectDTO {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
+    private Boolean pinned;
+
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String id, List<String> images, String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public ProjectDTO(String id, List<String> images, String name, String fullName, String language, String description, License license, String projectUrl, String githubUrl, Boolean pinned, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.images = images;
         this.name = name;
@@ -51,6 +53,7 @@ public class ProjectDTO {
         this.license = license;
         this.projectUrl = projectUrl;
         this.githubUrl = githubUrl;
+        this.pinned = pinned;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
@@ -66,6 +69,7 @@ public class ProjectDTO {
                 project.getLicense(),
                 project.getProjectUrl(),
                 project.getGithubUrl(),
+                project.isPinned(),
                 project.getUpdatedAt(),
                 project.getCreatedAt()
         );
@@ -141,6 +145,14 @@ public class ProjectDTO {
 
     public void setGithubUrl(String githubUrl) {
         this.githubUrl = githubUrl;
+    }
+
+    public Boolean getPinned() {
+        return pinned;
+    }
+
+    public void setPinned(Boolean pinned) {
+        this.pinned = pinned;
     }
 
     public LocalDateTime getUpdatedAt() {

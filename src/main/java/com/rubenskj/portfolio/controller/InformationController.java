@@ -14,8 +14,13 @@ public class InformationController {
         this.informationService = informationService;
     }
 
+    @GetMapping("/edit/{personId}")
+    public InformationDTO getInformationDTOWithoutPinnedSort(@PathVariable("personId") String personId) {
+        return this.informationService.getInformationDTOByPersonId(personId);
+    }
+
     @GetMapping("/{personId}")
     public InformationDTO getInformationDTO(@PathVariable("personId") String personId) {
-        return this.informationService.getInformationDTOByPersonId(personId);
+        return this.informationService.getInformationDTOByPersonIdWithPinnedSorted(personId);
     }
 }

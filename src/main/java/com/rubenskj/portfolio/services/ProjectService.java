@@ -13,9 +13,11 @@ import com.rubenskj.portfolio.util.GitUrls.GitProvider;
 import com.rubenskj.portfolio.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,12 +33,15 @@ import static com.rubenskj.portfolio.util.HttpUtil.getUrlFormattedByProvider;
 public class ProjectService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectService.class);
+    private static final String COLLECTION_NAME = "project";
 
     private final IProjectRepository projectRepository;
+    private final MongoTemplate mongoTemplate;
     private final ImageService imageService;
 
-    public ProjectService(IProjectRepository projectRepository, ImageService imageService) {
+    public ProjectService(IProjectRepository projectRepository, MongoTemplate mongoTemplate, ImageService imageService) {
         this.projectRepository = projectRepository;
+        this.mongoTemplate = mongoTemplate;
         this.imageService = imageService;
     }
 
@@ -68,6 +73,18 @@ public class ProjectService {
 
     public List<Project> getAllProjectFromPerson(String personId) {
         return this.projectRepository.findAllByPersonId(personId);
+    }
+
+    public List<Project> getAllProjectPinnedFromPerson(String personId) {
+        Criteria criteria = new Criteria();
+
+        criteria.and("personId").is(personId)
+                .and("isPinned").is(true);
+
+        Query query = new Query();
+        query.addCriteria(criteria);
+
+        return this.mongoTemplate.find(query, Project.class, COLLECTION_NAME);
     }
 
     public Project createProjectByProjectUrl(String personId, ProjectByUrlDTO projectByUrlDTO) {
@@ -134,39 +151,16 @@ public class ProjectService {
     }
 
     private void updateProjectFromDTO(Project project, ProjectDTO projectDTO) {
-        if (isNotEmpty(projectDTO.getName())) {
-            project.setName(projectDTO.getName());
-        }
-
-        if (isNotEmpty(projectDTO.getFullName())) {
-            project.setFullName(projectDTO.getFullName());
-        }
-
-        if (isNotEmpty(projectDTO.getLanguage())) {
-            project.setLanguage(projectDTO.getLanguage());
-        }
-
-        if (isNotEmpty(projectDTO.getDescription())) {
-            project.setDescription(projectDTO.getDescription());
-        }
-
-        if (projectDTO.getLicense() != null && (isNotEmpty(projectDTO.getLicense().getKey()) && isNotEmpty(projectDTO.getLicense().getName()) && isNotEmpty(projectDTO.getLicense().getUrl()))) {
-            project.setLicense(projectDTO.getLicense());
-        }
-
-        if (isNotEmpty(projectDTO.getProjectUrl())) {
-            project.setProjectUrl(projectDTO.getProjectUrl());
-        }
-
-        if (isNotEmpty(projectDTO.getGithubUrl())) {
-            project.setGithubUrl(projectDTO.getGithubUrl());
-        }
+        project.setName(projectDTO.getName());
+        project.setFullName(projectDTO.getFullName());
+        project.setLanguage(projectDTO.getLanguage());
+        project.setDescription(projectDTO.getDescription());
+        project.setLicense(projectDTO.getLicense());
+        project.setProjectUrl(projectDTO.getProjectUrl());
+        project.setGithubUrl(projectDTO.getGithubUrl());
+        project.setPinned(projectDTO.getPinned() != null && projectDTO.getPinned());
 
         project.setUpdatedAt(LocalDateTime.now());
-    }
-
-    private boolean isNotEmpty(String name) {
-        return !StringUtils.isEmpty(name);
     }
 
     private void handleImages(List<MultipartFile> images, Project project) {

@@ -21,7 +21,7 @@ public class CertificationDTO {
     @NotNull(message = "Certification Url cannot be null")
     private String certificationUrl;
 
-    private boolean isPinned;
+    private Boolean pinned;
 
     private LocalDateTime updatedAt;
     private LocalDateTime creationAt = LocalDateTime.now();
@@ -29,13 +29,13 @@ public class CertificationDTO {
     public CertificationDTO() {
     }
 
-    public CertificationDTO(String id, String image, String title, String description, String certificationUrl, boolean isPinned, LocalDateTime updatedAt, LocalDateTime creationAt) {
+    public CertificationDTO(String id, String image, String title, String description, String certificationUrl, Boolean pinned, LocalDateTime updatedAt, LocalDateTime creationAt) {
         this.id = id;
         this.image = image;
         this.title = title;
         this.description = description;
         this.certificationUrl = certificationUrl;
-        this.isPinned = isPinned;
+        this.pinned = pinned;
         this.updatedAt = updatedAt;
         this.creationAt = creationAt;
     }
@@ -93,12 +93,12 @@ public class CertificationDTO {
         this.certificationUrl = certificationUrl;
     }
 
-    public boolean isPinned() {
-        return isPinned;
+    public Boolean getPinned() {
+        return pinned;
     }
 
-    public void setPinned(boolean pinned) {
-        isPinned = pinned;
+    public void setPinned(Boolean pinned) {
+        this.pinned = pinned;
     }
 
     public LocalDateTime getUpdatedAt() {

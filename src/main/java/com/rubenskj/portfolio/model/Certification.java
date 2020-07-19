@@ -25,14 +25,14 @@ public class Certification {
 
     private boolean isPinned;
 
-    public Certification(String personId, String image, String title, String description, String certificationUrl) {
+    public Certification(String personId, String image, String title, String description, String certificationUrl, boolean isPinned) {
         this.personId = personId;
         this.image = image;
         this.title = title;
         this.description = description;
         this.certificationUrl = certificationUrl;
         this.updatedAt = LocalDateTime.now();
-        this.isPinned = false;
+        this.isPinned = isPinned;
     }
 
     public String getId() {

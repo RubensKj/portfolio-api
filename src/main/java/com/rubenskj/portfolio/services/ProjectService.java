@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rubenskj.portfolio.PathTypeEnum.PROJECT_PATH_URI;
 import static com.rubenskj.portfolio.util.HttpUtil.getUrlFormattedByProvider;
 
 @Service
@@ -120,8 +121,12 @@ public class ProjectService {
         return GitUrls.getByNameOfProvider(nameProvider);
     }
 
-    public Project updateByProjectId(String projectId, ProjectDTO projectDTO) {
+    public Project updateByProjectId(String projectId, List<MultipartFile> images, ProjectDTO projectDTO) {
         Project project = this.findById(projectId);
+
+        if (images != null) {
+            this.handleImages(images, project);
+        }
 
         this.updateProjectFromDTO(project, projectDTO);
 
@@ -166,9 +171,11 @@ public class ProjectService {
 
     private void handleImages(List<MultipartFile> images, Project project) {
         if (images != null && !images.isEmpty()) {
-            List<String> fileNames = this.imageService.saveImages(images);
+            String placeProjects = PROJECT_PATH_URI.getType();
 
-            fileNames = fileNames.stream().map(this.imageService::getDefaultUrl).collect(Collectors.toList());
+            List<String> fileNames = this.imageService.saveImages(images, placeProjects);
+
+            fileNames = fileNames.stream().map(fileName -> this.imageService.getDefaultUrl(fileName, placeProjects)).collect(Collectors.toList());
 
             project.getImages().addAll(fileNames);
         }

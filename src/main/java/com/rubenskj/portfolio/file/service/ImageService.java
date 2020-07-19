@@ -1,7 +1,10 @@
 package com.rubenskj.portfolio.file.service;
 
+import com.rubenskj.portfolio.PathTypeEnum;
 import com.rubenskj.portfolio.exception.NotFoundException;
 import com.rubenskj.portfolio.file.property.ImageProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 public class ImageService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 
     private final Path path;
     private final HttpServletRequest request;
@@ -33,16 +39,25 @@ public class ImageService {
 
         try {
             Files.createDirectories(this.path);
+
+            new ArrayList<>(Arrays.asList(PathTypeEnum.values())).forEach(pathType -> {
+                try {
+                    Files.createDirectories(this.path.resolve(pathType.getType()));
+                } catch (IOException e) {
+                    LOGGER.error("It wasn't able to create folder from path type. PathTypeEnum: {}", pathType.getType());
+                }
+            });
+
         } catch (Exception ex) {
             throw new IllegalArgumentException("Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
 
-    public List<String> saveImages(List<MultipartFile> images) {
+    public List<String> saveImages(List<MultipartFile> images, String typeToPath) {
         List<String> imagesUrl = new ArrayList<>();
 
         images.forEach(imageFile -> {
-            String fileName = this.saveImage(imageFile);
+            String fileName = this.saveImage(imageFile, typeToPath);
 
             imagesUrl.add(fileName);
         });
@@ -50,9 +65,11 @@ public class ImageService {
         return imagesUrl;
     }
 
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName, String typePath) {
         try {
-            Path filePath = this.path.resolve(fileName).normalize();
+            final String fileMinResolve = typePath + "/" + fileName;
+
+            Path filePath = this.path.resolve(fileMinResolve).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
@@ -64,7 +81,7 @@ public class ImageService {
         }
     }
 
-    public String saveImage(MultipartFile avatar) {
+    public String saveImage(MultipartFile avatar, String typeToPath) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(avatar.getOriginalFilename()));
 
         try {
@@ -72,7 +89,13 @@ public class ImageService {
                 throw new IllegalArgumentException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
-            Path targetLocation = this.path.resolve(fileName);
+            Path targetLocation;
+            if (StringUtils.isEmpty(typeToPath)) {
+                targetLocation = this.path.resolve(fileName);
+            } else {
+                targetLocation = this.path.resolve(typeToPath + "/" + fileName);
+            }
+
             Files.copy(avatar.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
@@ -81,11 +104,11 @@ public class ImageService {
         }
     }
 
-    public String getDefaultUrl(String avatarFileName) {
-        Resource resource = this.loadFileAsResource(avatarFileName);
+    public String getDefaultUrl(String avatarFileName, String typeToPath) {
+        Resource resource = this.loadFileAsResource(avatarFileName, typeToPath);
 
         URI uri = URI.create(request.getRequestURL().toString()).resolve(request.getContextPath());
 
-        return uri.getScheme().concat("://").concat(uri.getAuthority().concat("/api/images/").concat(resource.getFilename()));
+        return uri.getScheme().concat("://").concat(uri.getAuthority().concat("/api/images/" + typeToPath + "/").concat(resource.getFilename()));
     }
 }

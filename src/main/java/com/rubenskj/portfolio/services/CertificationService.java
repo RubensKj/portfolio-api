@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.rubenskj.portfolio.PathTypeEnum.CERTIFICATION_PATH_URI;
+
 @Service
 public class CertificationService {
 
@@ -78,10 +80,12 @@ public class CertificationService {
             return;
         }
 
-        LOGGER.info("Saving Image Certification");
-        String saveImageFile = this.imageService.saveImage(imageFile);
+        String placeCertifications = CERTIFICATION_PATH_URI.getType();
 
-        String imageUrl = this.imageService.getDefaultUrl(saveImageFile);
+        LOGGER.info("Saving Image Certification");
+        String saveImageFile = this.imageService.saveImage(imageFile, placeCertifications);
+
+        String imageUrl = this.imageService.getDefaultUrl(saveImageFile, placeCertifications);
 
         certification.setImage(imageUrl);
     }

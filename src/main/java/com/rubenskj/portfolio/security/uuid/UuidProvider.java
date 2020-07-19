@@ -6,8 +6,6 @@ import com.rubenskj.portfolio.security.dto.AuthDTO;
 import com.rubenskj.portfolio.security.model.Session;
 import com.rubenskj.portfolio.security.repository.ISessionRepository;
 import com.rubenskj.portfolio.util.ParamsKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,6 @@ import static com.rubenskj.portfolio.security.dto.UserDTO.ofUserDetails;
 
 @Service
 public class UuidProvider {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UuidProvider.class);
 
     private final ISessionRepository sessionRepository;
 

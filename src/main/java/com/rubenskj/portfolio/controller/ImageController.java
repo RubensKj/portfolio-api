@@ -16,11 +16,11 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/images/{filename:.+}")
+    @GetMapping("/images/{typePath}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveFile(@PathVariable("typePath") String typePath, @PathVariable("filename") String filename) {
 
-        Resource file = imageService.loadFileAsResource(filename);
+        Resource file = imageService.loadFileAsResource(filename, typePath);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);

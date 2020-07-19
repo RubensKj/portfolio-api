@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.rubenskj.portfolio.PathTypeEnum.PERSON_PATH_URI;
+
 @Service
 public class PersonService {
 
@@ -31,7 +33,7 @@ public class PersonService {
         LOGGER.info("Saving person information");
         LOGGER.debug("PersonDTO: {}", personDTO);
 
-        String avatarFileName = this.imageService.saveImage(avatar);
+        String avatarFileName = this.imageService.saveImage(avatar, PERSON_PATH_URI.getType());
 
         String urlImage = this.parseUrlAvatarByFileName(avatarFileName);
 
@@ -62,7 +64,7 @@ public class PersonService {
         Person person = this.findPersonById(id);
 
         if (avatar != null) {
-            String avatarFileName = this.imageService.saveImage(avatar);
+            String avatarFileName = this.imageService.saveImage(avatar, PERSON_PATH_URI.getType());
             String urlAvatar = this.parseUrlAvatarByFileName(avatarFileName);
 
             person.setAvatar(urlAvatar);
@@ -81,6 +83,6 @@ public class PersonService {
     }
 
     private String parseUrlAvatarByFileName(String avatarFileName) {
-        return this.imageService.getDefaultUrl(avatarFileName);
+        return this.imageService.getDefaultUrl(avatarFileName, PERSON_PATH_URI.getType());
     }
 }

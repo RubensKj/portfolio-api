@@ -40,8 +40,8 @@ public class ProjectController {
 
     @PutMapping("/{projectId}")
     @PreAuthorize("hasAuthority('RL_ADMIN')")
-    public ProjectDTO updateProject(@PathVariable("projectId") String projectId, @Valid @RequestBody ProjectDTO projectDTO) {
-        return ProjectDTO.of(this.projectService.updateByProjectId(projectId, projectDTO));
+    public ProjectDTO updateProject(@PathVariable("projectId") String projectId, @RequestParam(name = "images", required = false) List<MultipartFile> images, @Valid ProjectDTO projectDTO) {
+        return ProjectDTO.of(this.projectService.updateByProjectId(projectId, images, projectDTO));
     }
 
     @DeleteMapping("/{projectId}")

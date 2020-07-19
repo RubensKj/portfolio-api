@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static com.rubenskj.portfolio.enums.ContactStatus.WAITING;
-import static com.rubenskj.portfolio.enums.PathTypeEnum.CONTACT_PATH_URI;
 
 @Service
 public class ContactService {
@@ -35,11 +34,7 @@ public class ContactService {
         try {
             this.emailService.sendEmailFromContact(attachments, contactDTO);
         } catch (Exception e) {
-            LOGGER.error("It wasn't able to send the e-mail. Saving the contact locally.");
-
-            if (attachments != null) {
-                this.imageService.saveImages(attachments, CONTACT_PATH_URI.getType());
-            }
+            LOGGER.error("It wasn't able to send the e-mail. Saving the contact locally. e -> {}", e);
 
             Contact contactFromDTO = this.createContactFromDTO(contactDTO);
 

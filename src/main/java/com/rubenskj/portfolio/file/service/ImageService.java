@@ -53,6 +53,10 @@ public class ImageService {
         }
     }
 
+    public Path getPath() {
+        return path;
+    }
+
     public List<String> saveImages(List<MultipartFile> images, String typeToPath) {
         List<String> imagesUrl = new ArrayList<>();
 

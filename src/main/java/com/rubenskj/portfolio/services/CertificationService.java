@@ -51,7 +51,7 @@ public class CertificationService {
                 certificationDTO.getTitle(),
                 certificationDTO.getDescription(),
                 certificationDTO.getCertificationUrl(),
-                certificationDTO.getPinned()
+                certificationDTO.getPinned() != null && certificationDTO.getPinned()
         );
     }
 

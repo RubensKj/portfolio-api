@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/RubensKj/portfolio-api/master/.github/code.png" width="100"/>
+   <img src="https://raw.githubusercontent.com/RubensKj/myportfolio/master/.github/code.png" width="100"/>
 </p>
 
 # Portfolio API

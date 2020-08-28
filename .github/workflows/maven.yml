@@ -24,9 +24,7 @@ jobs:
       uses: christian-draeger/write-properties@1.0.1
       with:
         path: './src/main/resources/application.properties'
-        mongo.uri.property: 'spring.data.mongodb.uri'
-        mongo.uri.value: ${{ secrets.MONGO_URI }}
-        mongo.database.property: 'spring.data.mongodb.uri'
-        mongo.database.value: ${{ secrets.MONGO_DATABASE }}
+        property: 'spring.data.mongodb.uri'
+        value: ${{ secrets.MONGO_URI }}
     - name: Build with Maven
       run: mvn -B package --file pom.xml

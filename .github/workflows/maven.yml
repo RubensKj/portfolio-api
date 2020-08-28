@@ -28,15 +28,18 @@ jobs:
         value: ${{ secrets.MONGO_URI }}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    
-    - name: Publishing the Artifact
-    - run: mkdir -p configs
-    - run: mv target/*.jar configs/.
+  
+    - name: Configuring the environment to publish
+      run: mkdir -p publish-portfolio
+      
+    - name: Copying the files to upload
+      run: mv target/*.jar publish-portfolio/.
     
     - uses: actions/upload-artifact@v2
+    - name: Publishing the Artifact
       with:
         name: portfolio-configs
-        path: configs
+        path: publish-portfolio
         
   test:
     
@@ -48,11 +51,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+        
     - name: Write Properties
       uses: christian-draeger/write-properties@1.0.1
       with:
         path: './src/main/resources/application.properties'
         property: 'spring.data.mongodb.uri'
         value: ${{ secrets.MONGO_URI }}
+        
     - name: Test with Maven
       run: mvn -B test --file pom.xml

@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+      env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}
         ACTIVE_PROFILE: ${{ secrets.ACTIVE_PROFILE }}

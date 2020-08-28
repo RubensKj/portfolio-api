@@ -20,9 +20,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - uses: microsoft/variable-substitution@v1 
-      with:
-        files: 'src/main/resources/application.yml'
+    - uses: ./src/main/resources/application.yml
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}

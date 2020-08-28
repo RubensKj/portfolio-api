@@ -33,9 +33,6 @@ jobs:
           spring.profiles.active=${{ env.profile.active }}
         write-mode: overwrite
       env:
-        home: src/main/resources/
-        mongo.uri: mongodb://admin.rubenskj:KhahtFLVPP@rubenskj.com:27017/?authSource=admin
-        mongo.database: portfolio
-        profile.active: PRODUCTION
+        home: src/main/resources
     - name: Build with Maven
       run: mvn -B package --file pom.xml

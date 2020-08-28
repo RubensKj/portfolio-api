@@ -20,6 +20,17 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+    - name: Write Properties
+      # You may pin to the exact commit or the version.
+      # uses: christian-draeger/write-properties@0c4fa75e27cccc65212581d3c73e2c14c1cd6ee1
+      uses: christian-draeger/write-properties@1.0.1
+      with:
+        # The path to the properties file.
+        path: './src/main/resources/application.properties'
+        # The property you want to write
+        property: 'spring.data.mongodb.uri'
+        # The properties value you want to write
+        value: ${{ secrets.MONGO_URI }}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       env:

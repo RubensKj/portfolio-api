@@ -36,7 +36,7 @@ jobs:
       run: mv target/*.jar publish-portfolio/.
     
     - uses: actions/upload-artifact@v2
-    - name: Publishing the Artifact
+      name: Publishing the Artifact
       with:
         name: portfolio-configs
         path: publish-portfolio

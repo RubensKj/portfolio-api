@@ -38,7 +38,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       name: Publishing the Artifact
       with:
-        name: portfolio-configs
+        name: portfolio-api
         path: publish-portfolio
         
   test:

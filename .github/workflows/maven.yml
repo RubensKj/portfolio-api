@@ -22,7 +22,7 @@ jobs:
         java-version: 11
     - uses: microsoft/variable-substitution@v1 
       with:
-        files: 'application.properties'
+        files: 'src/main/resources/application.properties'
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}

@@ -29,14 +29,30 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     
-    - name: Display structure
-      run: ls -R
-    
+    - name: Publishing the Artifact
     - run: mkdir -p configs
-    
-    - run: mv target/* configs/.
+    - run: mv target/*.jar configs/.
     
     - uses: actions/upload-artifact@v2
       with:
         name: portfolio-configs
         path: configs
+        
+  test:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Write Properties
+      uses: christian-draeger/write-properties@1.0.1
+      with:
+        path: './src/main/resources/application.properties'
+        property: 'spring.data.mongodb.uri'
+        value: ${{ secrets.MONGO_URI }}
+    - name: Test with Maven
+      run: mvn -B test --file pom.xml

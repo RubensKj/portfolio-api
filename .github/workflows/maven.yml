@@ -29,23 +29,12 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     
-    - name: Display structure of downloaded files
+    - name: Display structure
       run: ls -R
-      
-  publish:
-    needs: build
-
-    runs-on: ubuntu-latest
     
-    steps:
-    - name: Display structure of downloaded files
-      run: ls -R
-      
-    - uses: actions/checkout@v2
-      
     - run: mkdir -p configs
     
-    - run: mv target/*.jar configs/.
+    - run: mv target/* configs/.
     
     - uses: actions/upload-artifact@v2
       with:

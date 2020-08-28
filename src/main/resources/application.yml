@@ -1,0 +1,8 @@
+# This shouldn't contain anything cause it'll be set in the deploy machine.
+
+# Mongo Properties
+# Cluster
+spring.data.mongodb.uri=$MONGO_URI
+spring.data.mongodb.database=$MONGO_DATABASE
+
+spring.profiles.active=$ACTIVE_PROFILE

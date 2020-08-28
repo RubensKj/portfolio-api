@@ -20,19 +20,5 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Write yml properties
-      uses: DamianReeves/write-file-action@v1.0
-      with:
-        path: ${{ env.home}}/application.properties 
-        contents: |
-          # Mongo Properties
-          # Cluster
-          spring.data.mongodb.uri=${{ env.mongo.uri }}
-          spring.data.mongodb.database=${{ env.mongo.database }}
-
-          spring.profiles.active=${{ env.profile.active }}
-        write-mode: overwrite
-      env:
-        home: src/main/resources
     - name: Build with Maven
       run: mvn -B package --file pom.xml

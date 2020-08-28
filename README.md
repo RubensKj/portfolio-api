@@ -10,6 +10,7 @@
 [![Stars](https://img.shields.io/github/stars/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/stargazers)
 [![Forks](https://img.shields.io/github/forks/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/network/members)
 [![Contributors](https://img.shields.io/github/contributors/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/graphs/contributors)
+[![Java CI with Maven](https://github.com/RubensKj/portfolio-api/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/RubensKj/portfolio-api/actions?query=workflow%3A%22Java+CI+with+Maven%22)
 
 
 > A data provider to portfolio web ✌🏻

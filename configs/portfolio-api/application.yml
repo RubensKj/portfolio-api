@@ -1,0 +1,19 @@
+# This production yml, that will be used in deploy
+
+spring:
+  data:
+    mongodb:
+      database: portfolio
+      uri: mongodb://localhost:27017
+  profiles:
+    active: PRODUCTION
+
+
+com:
+  rubens:
+    admin:
+      email: prod_ci@rubenskj.com
+      password: PROD_CI
+
+    images:
+      path: ci_images

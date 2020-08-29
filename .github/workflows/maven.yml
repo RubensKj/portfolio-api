@@ -32,6 +32,9 @@ jobs:
     - name: Configuring the environment to publish
       run: mkdir -p publish-portfolio
       
+    - name: Copying configs files..
+      run: mv configs/* publish-portfolio/.
+
     - name: Copying the files to upload
       run: mv target/*.jar publish-portfolio/.
     

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rubenskj</groupId>
-	<artifactId>portfolio</artifactId>
+	<artifactId>portfolio-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>portfolio</name>
 	<description>Portfolio API to provide data for the web project</description>

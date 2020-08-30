@@ -2,11 +2,11 @@
 # Cluster
 spring:
   profiles:
-    active: #{PROFILE_ACTIVE}#
+    active: $(PROFILE_ACTIVE)
   data:
     mongodb:
-      uri: #{MONGO_URI}#
-      database: #{MONGO_DATABASE}#
+      uri: $(MONGO_URI)
+      database: $(MONGO_DATABASE)
     web:
       pageable:
         max-page-size: 100
@@ -25,13 +25,13 @@ logging:
 com:
   rubens:
     admin:
-      email: #{RUBENS_ADMIN_EMAIL}#
-      password: #{RUBENS_ADMIN_PASSWORD}#
+      email: $(RUBENS_ADMIN_EMAIL)
+      password: $(RUBENS_ADMIN_PASSWORD)
     email:
-      host: #{RUBENS_EMAIL_HOST}#
-      username: #{RUBENS_EMAIL_USERNAME}#
-      password: #{RUBENS_EMAIL_PASSWORD}#
-      toEmail: #{RUBENS_EMAIL_TO_EMAIL}#
+      host: $(RUBENS_EMAIL_HOST)
+      username: $(RUBENS_EMAIL_USERNAME)
+      password: $(RUBENS_EMAIL_PASSWORD)
+      toEmail: $(RUBENS_EMAIL_TO_EMAIL)
       ssl: false
     images:
       path: images
@@ -39,12 +39,12 @@ com:
 # SSL Config
 server:
   ssl:
-    key-store: #{SERVER_SSL_KEY_STORE}#
-    key-store-password: #{SERVER_SSL_KEY_STORE_PASSWORD}#
-    key-store-type: #{SERVER_SSL_KEY_STORE_TYPE}#
-    key-password: #{SERVER_SSL_KEY_STORE_PASSWORD}#
+    key-store: $(SERVER_SSL_KEY_STORE)
+    key-store-password: $(SERVER_SSL_KEY_STORE_PASSWORD)
+    key-store-type: $(SERVER_SSL_KEY_STORE_TYPE)
+    key-password: $(SERVER_SSL_KEY_STORE_PASSWORD)
     enabled: true
-  port: #{SERVER_PORT}#
+  port: $(SERVER_PORT)
 
 security:
   require-ssl: true

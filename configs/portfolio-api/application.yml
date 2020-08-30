@@ -2,11 +2,11 @@
 # Cluster
 spring:
   profiles:
-    active: $(PROFILE_ACTIVE)
+    active: ${{variables.PROFILE_ACTIVE}}
   data:
     mongodb:
-      uri: $(MONGO_URI)
-      database: $(MONGO_DATABASE)
+      uri: ${{variables.MONGO_URI}}
+      database: ${{variables.MONGO_DATABASE}}
     web:
       pageable:
         max-page-size: 100

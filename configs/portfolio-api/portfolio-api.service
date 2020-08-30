@@ -4,7 +4,7 @@
 [Service]
  WorkingDirectory=/opt/portfolio-api/
  SuccessExitStatus=143
- ExecStart=./start.sh
+ ExecStart=/opt/portfolio-api/start.sh
 
 [Install]
  WantedBy=multi-user.target

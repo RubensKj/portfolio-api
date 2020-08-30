@@ -16,4 +16,5 @@ if ! [ -s "$default_folder/start.sh" ]
 then
     echo "File start.sh was not found. Moving from artifact folder."
     mv ./$(ARTIFACT_NAME)/$(ARTIFACT_NAME)/$(SERVICE_NAME)/start.sh $default_folder/.
+    chmod +x $default_folder/start.sh
 fi

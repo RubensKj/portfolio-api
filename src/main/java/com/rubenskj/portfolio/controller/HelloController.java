@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/hello")
 public class HelloController {
 
+    // Rest Controller created to test CICD working..
+
     @GetMapping
     public String showCICDWorking() {
-        return "CICD is working!!! :)";       
+        return "CICD is working!!! :)..";       
     }
 }

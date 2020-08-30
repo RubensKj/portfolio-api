@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @GetMapping
-    public void showCICDWorking() {
+    public String showCICDWorking() {
         return "CICD is working!!! :)";       
     }
 }

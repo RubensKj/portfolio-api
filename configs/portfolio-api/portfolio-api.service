@@ -4,7 +4,7 @@
 [Service]
  WorkingDirectory=/opt/portfolio-api/
  SuccessExitStatus=143
- ExecStart=/opt/portfolio-api/start.sh
+ ExecStart=/bin/java -Xmx2048m -Xms512m -jar /bin/portfolio.jar
 
 [Install]
  WantedBy=multi-user.target

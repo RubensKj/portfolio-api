@@ -13,3 +13,6 @@ else
     echo "Moving updated jar to application folder.."
     mv ./$(ARTIFACT_NAME)/$(SERVICE_NAME)/$(JAR_NAME).jar $default_folder/.
 fi
+
+echo "Adding permission to $(JAR_NAME).jar"
+chmod +x $default_folder/$(JAR_NAME).jar

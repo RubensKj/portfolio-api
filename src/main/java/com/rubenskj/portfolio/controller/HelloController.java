@@ -12,6 +12,6 @@ public class HelloController {
 
     @GetMapping
     public String showCICDWorking() {
-        return "Gustavo is the greatest.";       
+        return "Controller to show CICD working..";       
     }
 }

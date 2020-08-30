@@ -6,6 +6,12 @@ if ! [ -s "$default_folder/application.yml" ]
 then 
     echo "File application.yml does not exists. Moving from artifact folder."
     mv ./$(ARTIFACT_NAME)/$(ARTIFACT_NAME)/$(SERVICE_NAME)/application.yml $default_folder/.
+else 
+    if ! [ "./$(ARTIFACT_NAME)/$(ARTIFACT_NAME)/$(SERVICE_NAME)/application.yml" -eq "$default_folder/application.yml" ]
+    then 
+        echo "File application.yml has changes. Moving from artifact folder."
+        mv ./$(ARTIFACT_NAME)/$(ARTIFACT_NAME)/$(SERVICE_NAME)/application.yml $default_folder/.
+    fi
 fi
 
 echo "Validating if start.sh exists."

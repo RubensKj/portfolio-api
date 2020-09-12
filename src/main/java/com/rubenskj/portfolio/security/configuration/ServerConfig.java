@@ -28,19 +28,25 @@ public class ServerConfig {
                 context.addConstraint(securityConstraint);
             }
         };
+
         tomcat.addAdditionalTomcatConnectors(getHttpConnector());
+        tomcat.addAdditionalTomcatConnectors(getHttpsConnector());
+
         return tomcat;
     }
 
-    private Connector getHttpConnector() {
+    private Connector getHttpsConnector() {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
+
         try {
             File keystore = new ClassPathResource("keyStore.p12").getFile();
             File truststore = new ClassPathResource("keyStore.p12").getFile();
+
             connector.setScheme("https");
             connector.setSecure(true);
             connector.setPort(8443);
+
             protocol.setSSLEnabled(true);
             protocol.setKeystoreFile(keystore.getAbsolutePath());
             protocol.setKeystorePass("password");
@@ -53,5 +59,15 @@ public class ServerConfig {
             throw new IllegalStateException("can't access keystore: [" + "keystore"
                     + "] or truststore: [" + "keystore" + "]", ex);
         }
+    }
+
+    private Connector getHttpConnector() {
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+
+        connector.setScheme("http");
+        connector.setPort(8080);
+        connector.setSecure(false);
+
+        return connector;
     }
 }

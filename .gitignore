@@ -36,4 +36,8 @@ images/**
 
 ### Logs ##
 logs
+logs/*
 logs/**
+
+### Ket Store ###
+keyStore.p12

@@ -1,0 +1,10 @@
+[Unit]
+ Description=Portfolio API to provide the data to frontend.
+
+[Service]
+ WorkingDirectory=/opt/portfolio-api/
+ SuccessExitStatus=143
+ ExecStart=/bin/java -Xmx2048m -Xms512m -jar /opt/portfolio-api/portfolio-api.jar
+
+[Install]
+ WantedBy=multi-user.target

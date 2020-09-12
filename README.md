@@ -7,16 +7,14 @@
 [![Author](https://img.shields.io/badge/author-RubensKj-00cc74?style=flat-square)](https://github.com/RubensKj)
 [![Languages](https://img.shields.io/github/languages/count/RubensKj/portfolio-api?color=00cc74&style=flat-square)](#)
 [![License](https://img.shields.io/github/license/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/blob/master/LICENSE)
-[![Stars](https://img.shields.io/github/stars/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/stargazers)
 [![Forks](https://img.shields.io/github/forks/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/network/members)
 [![Contributors](https://img.shields.io/github/contributors/RubensKj/portfolio-api?color=00cc74&style=flat-square)](https://github.com/RubensKj/portfolio-api/graphs/contributors)
+[![Build Status](https://dev.azure.com/rubenskj/Portfolio-API/_apis/build/status/Portfolio-API-CI?branchName=master)](https://dev.azure.com/rubenskj/Portfolio-API/_build/latest?definitionId=1&branchName=master)
 
 
 > A data provider to portfolio web ✌🏻
 
 <p>An API to control all features in the portfolio web.</p>
-
-<br/>
 
 # 🐦 Direct Links
  * 🏗 [Development](#building_construction-Development)
@@ -30,6 +28,8 @@
 - [MongoDB](https://www.mongodb.com/)
 - [Maven](https://maven.apache.org/)
 - Linux for deploy
+
+> Used Azure DevOps for the CICD.
 
 # :rocket: About
 

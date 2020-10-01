@@ -33,7 +33,7 @@
 
 # :rocket: About
 
-You can reach the application by accessing [RubensKj API](https://rubenskj.com:8443/api/)
+You can reach the application by accessing [RubensKj API](https://vps-4248070.rubenskj.com:8443/api/hello)
 
 # :closed_book: License
 

@@ -12,6 +12,6 @@ public class HelloController {
 
     @GetMapping
     public String showCICDWorking() {
-        return "Hello there, this is the RubensKj API";       
+        return "Hello there, this is RubensKj's API";       
     }
 }

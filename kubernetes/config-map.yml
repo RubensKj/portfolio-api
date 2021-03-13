@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portfolio-api-config-map
+data:
+  SPRING_PROFILES_ACTIVE: PRODUCTION
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS: always
+  SPRING_SERVLET_MULTIPART_ENABLED: "true"
+  SPRING_SERVLET_MULTIPART_FILE-SIZE-THRESHOLD: 2KB
+  SPRING_SERVLET_MULTIPART_MAX-FILE-SIZE: 200MB
+  SPRING_SERVLET_MULTIPART_MAX-REQUEST-SIZE: 215MB
+  SPRING_DATA_MONGODB_URI: mongodb+srv://rubenskj:pdVGgSVo5Xkr@portfolio-api.8tjip.mongodb.net/portfolio
+  SPRING_DATA_MONGODB_DATABASE: portfolio
+  COM_RUBENS_ADMIN_EMAIL: development@rubenskj.com
+  COM_RUBENS_ADMIN_PASSWORD: development
+  COM_RUBENS_IMAGES_PATH: images
+  COM_RUBENS_CORS: http://localhost/,http://localhost:80/,http://localhost:3000/,https://localhost:3000/,http://rubenskj.com,https://rubenskj.com

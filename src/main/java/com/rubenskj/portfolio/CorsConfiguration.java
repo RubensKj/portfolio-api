@@ -14,8 +14,11 @@ import java.util.List;
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer {
 
+    @Value("${com.rubens.cors.enable}")
+    public Boolean CORS_ORIGINS_ENABLE;
+
     @Value("${com.rubens.cors}")
-    public List<String> cors = new ArrayList<>();
+    public List<String> CORS_ORIGINS = new ArrayList<>();
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -26,8 +29,8 @@ public class CorsConfiguration implements WebMvcConfigurer {
         corsRegistration.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
 
 
-        if (!cors.isEmpty()) {
-            corsRegistration.allowedOrigins(cors.toArray(new String[0]));
+        if (CORS_ORIGINS_ENABLE && !CORS_ORIGINS.isEmpty()) {
+            corsRegistration.allowedOrigins(CORS_ORIGINS.toArray(new String[0]));
         }
     }
 }

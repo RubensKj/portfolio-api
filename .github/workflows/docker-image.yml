@@ -27,6 +27,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     
-    - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$(date +%s)

@@ -27,26 +27,15 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   
-        
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-      
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
     
     - name: Login to DockerHub
-      uses: docker/login-action@v1 
+      uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Build and push
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        path: ./src/main/docker/Dockerfile
-        tags: rubenskj/portfolio-api:latest
+        
+    - name: Build the Docker image
+      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$GITHUB_SHA
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}

@@ -28,8 +28,8 @@ jobs:
       run: mvn -B package --file pom.xml
     
     - name: Build the Docker image
-      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$($GITHUB_SHA)
+      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:${{ github.sha }}
 
     - name: Publish
       run: |-
-        docker push "rubenskj/portfolio-api:$($GITHUB_SHA)
+        docker push rubenskj/portfolio-api:${{ github.sha }}

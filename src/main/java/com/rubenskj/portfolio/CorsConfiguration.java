@@ -14,7 +14,7 @@ import java.util.List;
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer {
 
-    @Value("${com.rubens.cors.enable}")
+    @Value("${com.rubens.cors.enable:false}")
     public Boolean CORS_ORIGINS_ENABLE;
 
     @Value("${com.rubens.cors}")

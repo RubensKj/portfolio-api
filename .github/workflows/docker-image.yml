@@ -29,3 +29,7 @@ jobs:
     
     - name: Build the Docker image
       run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$(date +%s)
+
+    - name: Publish
+      run: |-
+        docker push "rubenskj/portfolio-api:$(date +%s)"

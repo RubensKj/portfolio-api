@@ -36,6 +36,10 @@ jobs:
         
     - name: Build the Docker image
       run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$GITHUB_SHA
+      
+    - name: Publish
+      run: |-
+        docker push rubenskj/portfolio-api:$GITHUB_SHA
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}

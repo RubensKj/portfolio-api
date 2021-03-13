@@ -46,7 +46,7 @@ jobs:
       with:
         push: true
         path: ./src/main/docker/Dockerfile
-        tags: rubenskj/portfolio-api:$GITHUB_SHA
+        tags: rubenskj/portfolio-api:latest
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}

@@ -1,11 +1,9 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+  release:
+    types: [published, created, edited]
+    
 jobs:
 
   build:
@@ -18,14 +16,22 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Write Properties
-      uses: christian-draeger/write-properties@1.0.1
-      with:
-        path: './src/main/resources/application.properties'
-        property: 'spring.data.mongodb.uri'
-        value: ${{ secrets.MONGO_URI }}
+
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -DskipTests
+  
+    - name: Set Version
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
     - name: Build the Docker image
-      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$(date +%s)
+      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$RELEASE_VERSION
+      
+    - name: Publish
+      run: |-
+        docker push rubenskj/portfolio-api:$RELEASE_VERSION

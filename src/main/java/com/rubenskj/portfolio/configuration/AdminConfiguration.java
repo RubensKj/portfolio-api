@@ -33,8 +33,8 @@ public class AdminConfiguration {
 
         if (this.userService.existsByEmail(email)) {
             LOGGER.info("Deleting the old admin and their sessions.");
-            this.userService.deleteUserByEmail(email);
             this.sessionService.deleteAllSessionByEmail(email);
+            return;
         }
 
         UserCreationDTO admin = new UserCreationDTO(

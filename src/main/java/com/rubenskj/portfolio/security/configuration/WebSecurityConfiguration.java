@@ -4,6 +4,7 @@ import com.rubenskj.portfolio.security.service.UserDetailsServiceImpl;
 import com.rubenskj.portfolio.security.uuid.UuidAuthEntryPoint;
 import com.rubenskj.portfolio.security.uuid.UuidAuthFilter;
 import com.rubenskj.portfolio.security.uuid.UuidProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Value("${com.rubens.https.validate:false}")
+    private Boolean SHOULD_USE_HTTPS;
+
     private final UserDetailsServiceImpl userDetailsService;
     private final UuidAuthEntryPoint uuidAuthEntryPoint;
     private final UuidProvider uuidProvider;
@@ -43,14 +47,23 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.requiresChannel().anyRequest().requiresSecure().and()
-                .cors().and().csrf().disable()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("*").permitAll()
                 .and().exceptionHandling().authenticationEntryPoint(uuidAuthEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        this.addSecureHttps(http);
+
         http.addFilterBefore(authenticationUuidAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private void addSecureHttps(HttpSecurity http) throws Exception {
+        if (SHOULD_USE_HTTPS) {
+            http.requiresChannel()
+                    .anyRequest()
+                    .requiresSecure();
+        }
     }
 
     @Bean

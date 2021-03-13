@@ -12,6 +12,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      SHA8: ${GITHUB_SHA::8}
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -28,8 +31,8 @@ jobs:
       run: mvn -B package --file pom.xml
     
     - name: Build the Docker image
-      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:${{ github.sha }}
+      run: docker build . --file ./src/main/docker/Dockerfile --tag rubenskj/portfolio-api:$SHA8
 
     - name: Publish
       run: |-
-        docker push rubenskj/portfolio-api:${{ github.sha }}
+        docker push rubenskj/portfolio-api:$SHA8

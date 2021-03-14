@@ -45,6 +45,7 @@ public class ImageService {
                     Files.createDirectories(this.path.resolve(pathType.getType()));
                 } catch (IOException e) {
                     LOGGER.error("It wasn't able to create folder from path type. PathTypeEnum: {}", pathType.getType());
+                    LOGGER.error("Exception: e -> ", e);
                 }
             });
 

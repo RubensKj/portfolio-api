@@ -33,7 +33,7 @@ jobs:
       run: mkdir -p publish-portfolio
       
     - name: Copying configs files..
-      run: mv configs/* publish-portfolio/.
+      run: mv kubernetes/* publish-portfolio/.
 
     - name: Copying the files to upload
       run: mv target/*.jar publish-portfolio/.

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: portfolio-api-stateful
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: portfolio-api
+      labels:
+        app: portfolio-api
+    spec:
+      containers:
+        - name: portfolio-api-container
+          image: rubenskj/portfolio-api:v1.0.3
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: portfolio-api-config-map
+          volumeMounts:
+            - name: images-volume
+              mountPath: /deployments/images
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            periodSeconds: 20
+            failureThreshold: 3
+            initialDelaySeconds: 120
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            periodSeconds: 20
+            failureThreshold: 3
+            initialDelaySeconds: 120
+      volumes:
+          - name: images-volume
+            persistentVolumeClaim:
+              claimName: pvc-imagens
+  selector:
+    matchLabels:
+      app: portfolio-api
+  serviceName: svc-portfolio-api

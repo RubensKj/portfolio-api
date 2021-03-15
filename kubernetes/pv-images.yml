@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-portfolio-api
+  labels:
+    type: pv-portfolio-api
+spec:
+  storageClassName: pv-portfolio-api
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/kleinschmidt_rubensjr/portfolio-api/images"

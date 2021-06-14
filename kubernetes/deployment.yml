@@ -34,10 +34,10 @@ spec:
             initialDelaySeconds: 120
           resources:
             limits:
-#              cpu: 1000m
-#              memory: 3Gi
+              cpu: 1000m
+              memory: 5Gi
             requests:
-#              cpu: 200m
+              cpu: 200m
   selector:
     matchLabels:
       app: portfolio-api

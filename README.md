@@ -38,3 +38,4 @@ You can reach the application by accessing [RubensKj API](https://vps-4248070.ru
 # :closed_book: License
 
 License used in this project is [MIT license](https://github.com/RubensKj/portfolio-api/blob/master/LICENSE)
+
